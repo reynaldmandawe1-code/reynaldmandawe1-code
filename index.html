@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message for Tine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for a romantic, warm feel */
+        body {
+            /* Using a common, clean font as 'Inter' might not be loaded by default */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); /* Soft pink gradient background */
+        }
+        /* Custom animation for the card */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .confession-card {
+            animation: fadeInScale 1s ease-out forwards;
+        }
+
+        /* Custom animation for click effect (ping-once) */
+        @keyframes ping-once {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .animate-ping-once {
+            animation: ping-once 0.5s cubic-bezier(0, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div id="confession-card" class="confession-card w-full max-w-sm md:max-w-md bg-white p-8 rounded-3xl shadow-2xl text-center border-4 border-pink-400 opacity-0">
+        
+        <div class="mb-6">
+            <h1 class="text-5xl font-extrabold text-pink-600 mb-2 tracking-tight">
+                For You, Tine 💖
+            </h1>
+            <p class="text-lg text-gray-600 font-medium">
+                A little message just for you.
+            </p>
+        </div>
+
+        <p class="text-2xl font-semibold italic text-gray-800 leading-relaxed mb-6">
+            Tine, you are so incredibly...
+        </p>
+
+        <div id="confession-words-container" class="flex flex-wrap justify-center gap-4 mb-8">
+            </div>
+
+        <div class="w-full h-auto overflow-hidden rounded-xl shadow-lg border-2 border-pink-300 transform transition duration-500 hover:scale-[1.02]">
+          
+          
+             <img 
+                id="tine-image"
+                src="image.png"
+                alt="Placeholder for an image of Tine"
+                class="w-full h-auto rounded-xl shadow-lg transition duration-500 ease-in-out transform hover:scale-[1.02] mx-auto"
+            >
+            
+            <img 
+                id="cat-image" 
+                src="image.png" 
+                alt="A cute cat looking up, representing my feelings.." 
+                class="w-full h-auto object-cover rounded-xl"
+            >
+        </div>
+
+        <p class="mt-6 text-sm text-gray-500">
+            (Yes, you're even cuter than this cat.)
+        </p>
+    </div>
+
+    <script>
+        // NOTE: The image source is set to the provided uploaded file path.
+        const catImagePath = "uploaded:image.png-d00462cd-b1b9-4faf-95b3-9a42c412e963";
+        const imageElement = document.getElementById('cat-image');
+
+        // Set the image source
+        imageElement.src = catImagePath;
+
+        // Apply dynamic Tailwind classes and click effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const words = [
+                { id: 'beautiful', text: 'Beautiful', color: 'bg-red-200 hover:bg-red-300' },
+                { id: 'gorgeous', text: 'Gorgeous', color: 'bg-purple-200 hover:bg-purple-300' },
+                { id: 'cutie', text: 'Cutie', color: 'bg-yellow-200 hover:bg-yellow-300' }
+            ];
+
+            const container = document.getElementById('confession-words-container');
+            container.innerHTML = ''; // Clear any default content
+
+            words.forEach(word => {
+                const span = document.createElement('span');
+                span.id = word.id;
+                span.textContent = word.text;
+                // Combined Tailwind classes for styling and transition
+                span.className = `px-4 py-2 text-xl font-bold rounded-full shadow-md text-gray-800 transition duration-300 transform hover:scale-110 cursor-pointer ${word.color}`;
+                
+                // Add a cute click effect
+                span.addEventListener('click', () => {
+                    // Re-add the class to re-trigger the CSS animation
+                    span.classList.remove('animate-ping-once');
+                    void span.offsetWidth; // Force a reflow
+                    span.classList.add('animate-ping-once');
+                });
+
+                container.appendChild(span);
+            });
+        });
+    </script>
+</body>
+</html>
